@@ -18,7 +18,7 @@ class UserRouter {
   }
 
   private initializeRoutes() {
-  this.router.get("/",  verifyToken.verify ,  (req, res) => this.api.forwardGet   (req, res, "/all/list"));
+  this.router.get("/" ,  (req, res) => this.api.forwardGet   (req, res, "/all/list"));
   this.router.post("/",     (req, res) => this.api.forwardPost  (req, res, "/create"));
   this.router.put("/:id",   (req, res) => this.api.forwardPut   (req, res, `/${req.params.id}`));
   this.router.get("/:id",   (req, res) => this.api.forwardGetByID   (req, res, `/${req.params.id}`));

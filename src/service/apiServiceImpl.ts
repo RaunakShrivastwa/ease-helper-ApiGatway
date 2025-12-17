@@ -60,8 +60,12 @@ export default class ApiServiceImpl implements ApiService {
         return res.status(response.status).json({ message: "Logged out successfully" });
       }
 
+      if(response.data.token){
+          return res.status(response.status).json(response.data.token);
+      }
 
-      return res.status(response.status).json(response.data.token);
+       return res.status(response.status).json(response.data);
+     
     } catch (err: any) {
       return responseError.responseError(res, err);
     }
