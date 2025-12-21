@@ -1,7 +1,6 @@
 import { Router } from "express";
 import dotenv from "dotenv";
 import ApiService from "../../service/apiServiceImpl";
-import { logger } from "../../util/logger";
 import verifyToken from "../auth/verifyToken";
 
 dotenv.config();

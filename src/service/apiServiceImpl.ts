@@ -61,11 +61,10 @@ export default class ApiServiceImpl implements ApiService {
       }
 
       if(response.data.token){
-          return res.status(response.status).json(response.data.token);
+        const { password, ...newUser } = response.data.user;
+          return res.status(response.status).json({token:response.data.token,user:newUser});
       }
-
        return res.status(response.status).json(response.data);
-     
     } catch (err: any) {
       return responseError.responseError(res, err);
     }
