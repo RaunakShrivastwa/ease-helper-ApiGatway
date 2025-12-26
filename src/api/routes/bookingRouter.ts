@@ -21,6 +21,7 @@ class BookingRouter {
     this.router.get("/:id", (req, res) => this.api.forwardGetByID (req, res, `/find/bookingby/${req.params.id}`));
     this.router.delete("/:id", (req, res) => this.api.forwardDelete (req, res, `/delete/bookingby/${req.params.id}`));
     this.router.put("/:id", (req, res) => this.api.forwardPut (req, res, `/update/resource/${req.params.id}`));
+    this.router.patch('/accept/:id',(req,res)=>this.api.forwardPatch(req,res,`/accept/booking/${req.params.id}`));
     
   }
 }

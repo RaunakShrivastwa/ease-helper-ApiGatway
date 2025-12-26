@@ -50,6 +50,11 @@ export default class ApiServiceImpl implements ApiService {
         });
       }
 
+      if(response.data.isRefresh){
+        return res.status(response.status).json({token:response.data.token});
+      }
+
+      // for the logout response
       if (response.data.isLogout) {
         res.clearCookie("refreshToken", {
           httpOnly: true,
@@ -64,6 +69,7 @@ export default class ApiServiceImpl implements ApiService {
         const { password, ...newUser } = response.data.user;
           return res.status(response.status).json({token:response.data.token,user:newUser});
       }
+
        return res.status(response.status).json(response.data);
     } catch (err: any) {
       return responseError.responseError(res, err);
@@ -94,9 +100,12 @@ export default class ApiServiceImpl implements ApiService {
           headers: req.headers,
         }
       );
+
+      console.log(response);
+      
       return res.json(response.data);
     } catch (err) {
-      return res.status(500).json({ error: "User Service Down", details: err });
+       return responseError.responseError(res, err);
     }
   };
 
@@ -125,9 +134,5 @@ export default class ApiServiceImpl implements ApiService {
       return responseError.responseError(res, err);
     }
   }
-
-
-
-
 
 }
