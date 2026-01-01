@@ -5,7 +5,8 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --clear --respawn --transpile-only src/server.ts",
-    "start": "ts-node-dev --clear --respawn --transpile-only src/server.ts"
+    "start": "ts-node-dev --clear --respawn --transpile-only src/server.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -15,8 +16,11 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
     "jsonwebtoken": "^9.0.3",
     "jwt-decode": "^4.0.0",
+    "rate-limit-redis": "^4.3.1",
+    "redis": "^5.10.0",
     "winston": "^3.18.3"
   },
   "devDependencies": {

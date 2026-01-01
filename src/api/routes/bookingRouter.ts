@@ -17,7 +17,9 @@ class BookingRouter {
 
   private initializeRoutes() {
     this.router.post("/create", (req, res) =>this.api.forwardPost(req, res, "/create"));
+    this.router.put("/status/update/:id", (req, res) =>this.api.forwardPut(req, res, `/change/booking/status/${req.params.id}`));
     this.router.get('/getAll',(req, res) => this.api.forwardGet(req, res, '/get/all/created/bookings'));
+    this.router.get('/provider/id',(req, res) => this.api.forwardGet(req, res, '/provider/id/get/all/bookings'));
     this.router.get("/:id", (req, res) => this.api.forwardGetByID (req, res, `/find/bookingby/${req.params.id}`));
     this.router.delete("/:id", (req, res) => this.api.forwardDelete (req, res, `/delete/bookingby/${req.params.id}`));
     this.router.put("/:id", (req, res) => this.api.forwardPut (req, res, `/update/resource/${req.params.id}`));

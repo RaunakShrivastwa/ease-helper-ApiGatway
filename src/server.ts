@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import AppRouter from './api/routes/router';
 import { logger } from './util/logger';
 import cors from 'cors';
+import { redisClient } from './api/config/redis';
+import { rateLimiter } from './api/middleware/ratelimiter';
 dotenv.config();
 
 const app = express();
@@ -14,16 +16,21 @@ app.use(cors({
   credentials: true,               // 👈 Ye true hona hi chahiye
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
-}));;
+}));
+app.use(rateLimiter)
 
 app.use("/",appRouter.router);
 
 
 app.listen(PORT,(error)=>{
-     if(!error){
+     if(error){
         logger.info(`Server is running on port ${PORT}`);
-     } else {
-        logger.error(`Error occurred: ${error.message}`);
-     }
+     } 
+     startServer();
 });
+
+async function startServer(){
+     logger.info(`Server running on ${PORT}`);
+   //  await redisClient.connect();
+}
 

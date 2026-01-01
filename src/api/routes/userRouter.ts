@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import ApiService from '../../service/apiServiceImpl';
 import { logger } from '../../util/logger';
 import verifyToken from '../auth/verifyToken';
+import checkPermission from '../auth/checkPermission';
 
 dotenv.config();
 
@@ -19,11 +20,12 @@ class UserRouter {
 
   private initializeRoutes() {
   this.router.get("/" ,  (req, res) => this.api.forwardGet   (req, res, "/all/list"));
+  this.router.get("/details" ,  (req, res) => this.api.forwardGet   (req, res, "/search/your/order"));
   this.router.post("/",     (req, res) => this.api.forwardPost  (req, res, "/create"));
-  this.router.put("/:id",verifyToken.verify, (req, res) => this.api.forwardPut   (req, res, `/${req.params.id}`));
+  this.router.put("/:id",verifyToken.verify,checkPermission.checkPermission, (req, res) => this.api.forwardPut   (req, res, `/${req.params.id}`));
   this.router.get("/:id",verifyToken.verify,  (req, res) => this.api.forwardGetByID   (req, res, `/${req.params.id}`));
   this.router.patch("/:id",verifyToken.verify, (req, res) => this.api.forwardPatch (req, res, `/patch/${req.params.id}`));
-  this.router.delete("/:id",(req, res) => this.api.forwardDelete(req, res, `/${req.params.id}`));
+  this.router.delete("/:id",verifyToken.verify,checkPermission.checkPermission,(req, res) => this.api.forwardDelete(req, res, `/${req.params.id}`));
   this.router.get("/email/:email",verifyToken.verify,(req, res) => this.api.forwardGetByEmail(req, res, `/find/email/${req.params.email}`));
 }
 

@@ -20,15 +20,21 @@ export default class ApiServiceImpl implements ApiService {
     }
   };
 
-  // GET
-  public forwardGet = async (req: Request, res: Response, apiPath: string) => {
-    try {
-      const response = await axios.get(`${this.baseUrl}${apiPath}`);
-      return res.json(response.data);
-    } catch (err) {
-      return responseError.responseError(res, err);
-    }
-  };
+// GET
+public forwardGet = async (req: Request, res: Response, apiPath: string) => {
+  try {
+    const response = await axios.get(`${this.baseUrl}${apiPath}`, {
+      params: { text: req.query.text } ,
+      headers: req.headers
+        // Corrected to send the 'text' as a query parameter
+    });
+    
+    return res.json(response.data);
+  } catch (err) {
+    return responseError.responseError(res, err);
+  }
+};
+
 
   public forwardPost = async (req: Request, res: Response, apiPath: string) => {
     try {
@@ -79,7 +85,11 @@ export default class ApiServiceImpl implements ApiService {
   // PUT
   public forwardPut = async (req: Request, res: Response, apiPath: string) => {
     try {
-      const response = await axios.put(`${this.baseUrl}${apiPath}`, req.body);
+      const response = await axios.put(`${this.baseUrl}${apiPath}`, req.body,{
+        headers: {
+          authorization: req.headers.authorization || "",
+        }
+      });
       return res.json(response.data);
     } catch (err) {
       return responseError.responseError(res, err);
